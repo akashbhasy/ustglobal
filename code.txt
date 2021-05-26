@@ -1,0 +1,34 @@
+@Test
+	public void testSearchProductByName() throws Exception {
+		boolean result=true;
+		String productNameToSearch = "Laptop";
+		String productSearchUri = "/product/searchByProductName/"+productNameToSearch;
+		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(productSearchUri).accept(MediaType.APPLICATION_JSON_VALUE))
+				.andReturn();
+
+		int status = mvcResult.getResponse().getStatus();
+		assertEquals(200, status);
+
+		if(status == 200) {
+			String content = mvcResult.getResponse().getContentAsString();
+			Product productList[] = super.mapFromJson(content, Product[].class);
+			for(Product p:productList) {
+				if(p.getProductName().equals(productNameToSearch))
+				{
+						
+				}
+				else
+				{
+						result = false;
+						break;
+				}
+			}
+			assertTrue(result);
+		}
+		else
+		{
+			fail("URI is not correct");
+		}
+		
+	}
+Hands on : You have create test case for filterProductByPrice
